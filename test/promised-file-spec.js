@@ -3,7 +3,7 @@
 
 describe('File Promise', function() {
   'use strict';
-  var instance = require('../bin/file-promise');
+  var instance = require('../bin/promised-file');
 
   it('should have read the file.', function(done) {
     instance.getFile('/Users/wkseymou/projects/chroma/chroma-manager/chroma_ui_new/static/chroma_ui/*.map')

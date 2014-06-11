@@ -1,10 +1,10 @@
 {
   "name": "promised-file",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Super simple file reader, wrapped in a promise.",
+  "main": "bin/promised-file.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node test"
   },
   "author": "Wayne Kenneth Seymour III",
   "license": "MIT",
