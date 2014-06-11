@@ -1,0 +1,18 @@
+{
+  "name": "promised-file",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wayne Kenneth Seymour III",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine-node": "^1.14.3"
+  },
+  "dependencies": {
+    "glob": "^4.0.2",
+    "promise": "^5.0.0"
+  }
+}
