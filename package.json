@@ -1,6 +1,6 @@
 {
   "name": "promised-file",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Super simple file reader, wrapped in a promise.",
   "main": "bin/promised-file.js",
   "scripts": {
@@ -10,6 +10,9 @@
   "license": "MIT",
   "devDependencies": {
     "jasmine-node": "1.14.3"
+  },
+ "repository": {
+    "url": "https://github.com/js-inside/promised-file.git"
   },
   "dependencies": {
     "glob": "4.0.2",
