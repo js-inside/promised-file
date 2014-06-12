@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "glob": "4.0.2",
-    "promise": "5.0.0"
+    "promise": "5.0.0",
+    "sprintf": "0.1.3"
   }
 }
