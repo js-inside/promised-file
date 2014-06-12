@@ -19,7 +19,7 @@ getFile = function getFile(filePath) {
     })
     .catch (function catchErr(err) {
       var errMsg = sprintf('### Error: %s', err);
-      console.error(errMsg);
+      //console.error(errMsg);
 
       return errMsg;
     });
@@ -31,8 +31,6 @@ globForFile = function globForFile(file) {
 };
 
 readFile = function readFile(file) {
-  //var promise = Promise.denodeify(fs.readFile)(file.path || file[0], 'utf8');
-
   var promise = new Promise(function(resolve, reject) {
     fs.readFile(file.path || file[0], 'utf8', function(err, res) {
       if (err) reject(err);
