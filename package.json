@@ -4,7 +4,7 @@
   "description": "Super simple file reader, wrapped in a promise.",
   "main": "bin/promised-file.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node test"
+    "test": "./node_modules/.bin/jasmine-node bin"
   },
   "author": "Wayne Kenneth Seymour III",
   "license": "MIT",
