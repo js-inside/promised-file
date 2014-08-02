@@ -11,7 +11,7 @@ Supports command line globbing patterns.
 
 Journey into breaking my modules into the smallest pieces possible.
 
-Create a tiny wrapper around `fs` that returns a promise
+Create a tiny wrapper around `fs.readFile()` that returns a promise
 
 ### Install
 
@@ -25,17 +25,17 @@ $ npm install promised-file
 ```shell
 # install it:
 
-npm i promised-file 
+npm i promised-file
 
 # run it from your node_modules/ directory :
 
-# On an non-empty file.  
+# On an non-empty file.
 ./node_modules/.bin/promised-file package.* # Notice the glob pattern for package.json.
 
-#On an empty file.  
+#On an empty file.
 touch empty.txt # Create the empty file.
-./node_modules/.bin/promised-file empty* 
-# Logs to the console: 
+./node_modules/.bin/promised-file empty*
+# Logs to the console:
 #
 # ### Error:
 #  	File empty: empty.txt # Notice the expanded name from the glob pattern.
@@ -48,7 +48,7 @@ touch empty.txt # Create the empty file.
 var instance = require('promised-file');
 
   // ...
-  
+
   beforeEach(function () {
     notemptyfile = __dirname + '/fixtures/notemptyfile.js';
     emptyfile = __dirname + '/fixtures/emptyfile.js';
@@ -73,7 +73,7 @@ var instance = require('promised-file');
       });
 
   });
-  
+
   // ...
 
 // ->
