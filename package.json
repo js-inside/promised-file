@@ -1,20 +1,25 @@
 {
   "name": "promised-file",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Super simple file reader, wrapped in a promise.",
   "main": "bin/promised-file.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine-node bin"
+    "test": "mjnw",
+    "cover": "cover"
+  },
+  "bin": {
+    "promised-file": "./bin/promised-file.js"
   },
   "author": "Wayne Kenneth Seymour III",
   "license": "MIT",
   "devDependencies": {
-    "jasmine-node": "1.14.3"
+    "minijasminenodewrap": "1.0.1"
   },
- "repository": {
+  "repository": {
     "url": "https://github.com/js-inside/promised-file.git"
   },
   "dependencies": {
+    "funky": "0.0.4",
     "glob": "4.0.2",
     "promise": "5.0.0",
     "sprintf": "0.1.3"

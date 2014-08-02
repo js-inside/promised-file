@@ -1,31 +1,35 @@
-/* jshint node:true */
-/* globals describe, it, xit, expect */
+'use strict';
 
-describe('promised-file lib', function() {
-  'use strict';
-  var instance = require('../bin/promised-file');
-  var notemptyfile = process.cwd() + '/test/notemptyfile.js';
-  var emptyfile = process.cwd() + '/test/emptyfile.js';
+var instance = require('../bin/promised-file');
 
-  it('should return truthy for a file that is not empty.', function(done) {
+describe('promised-file lib', function () {
+
+  var notemptyfile;
+  var emptyfile;
+
+  beforeEach(function () {
+    notemptyfile = __dirname + '/fixtures/notemptyfile*';
+    emptyfile = __dirname + '/fixtures/emptyfile*';
+  });
+
+  it('should return truthy for a file that is not empty, supporting globbing.', function (done) {
 
     instance.getFile(notemptyfile)
-      .then(function(file) {//console.log('### file: \n', file);
-        expect(file).toBeTruthy();//expect(file).toBeFalsey();
+      .then(function(file) {
+        expect(file).toBeTruthy();
         done();
       });
+
   });
 
-  it('should reject an empty file', function emptyFileShouldReturnFalsey(done) {
+  it('should reject an empty file, supporting globbing', function emptyFileShouldReject (done) {
+
     instance.getFile(emptyfile)
-      .then(function prokEmptyFile(response) {
-        //console.log('### response in it block: \n', response);
-        expect(response.indexOf('Error')).not.toBe(-1);
+      .catch(function prokEmptyFile (response) {
+        expect(response).toContain('File empty');
         done();
       });
+
   });
-
-  xit('placeholder', function placeholder() {});
-
 
 });

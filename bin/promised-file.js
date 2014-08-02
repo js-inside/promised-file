@@ -1,62 +1,82 @@
-(function () {
-  /* jshint node:true */
+#!/usr/bin/env node
+'use strict';
 
-  'use strict';
+var fs = require('fs');
+var Promise = require('promise');
+var globThen = Promise.denodeify(require('glob'));
+require('funky'); // Requiring truthy() and existy() in global scope.
 
-  var fs = require('fs');
-  var glob = require('glob');
-  var Promise = require('promise');
-  var sprintf = require('sprintf');
+module.exports = {
+  getFile: getFile
+};
 
-  var globForFile;
-  var readFile;
-  var getFile;
+/**
+ * Gets the file specified on process.argv[2].
+ * The returned promise rejects on an empty file.
+ * @param {String} filePath Path to the file.
+ * @returns {Promise}
+ */
+function getFile (filePath) {
+  return globThen(filePath)
+    .then(readFile)
+    .then(function returnPromise (file) {
+      return file;
+    });
+}
 
-  getFile = function getFile (filePath) {
-    return globForFile(filePath)
-      .then(readFile)
-      .then(function returnPromise (file) {
-        return file;
+/**
+ * Gets the contents of a file using a promise that wraps fs.readFile().
+ * @param {Object|Array} file
+ * @returns {Promise}
+ */
+function readFile (file) {
+
+  return new Promise(function (resolve, reject) {
+    fs.readFile(file.path || file[0], 'utf8', function (err, res) {
+      if (err) reject(err);
+      if (res === "") reject("File empty: " + file);
+      else resolve(res);
+    });
+  });
+
+}
+
+(function run () {
+
+  // If (require.main === module), this module was
+  // called directly like via the cli.
+  // If (require.main !== module), this module was
+  // "require'd" like var gll = require('./getLastLine');
+  if (require.main === module) {
+
+    var fileArg = process.argv[2];
+
+    var getFileRunner = runIf(getFile.bind(null, fileArg));
+
+    getFileRunner(truthy(fileArg))
+      .then(function (response) {
+        console.log('### File [%s]: \n\t%s', fileArg, response);
       })
-      .catch(function catchErr (err) {
-      var errMsg = sprintf('### Error: %s', err);
-      //console.error(errMsg);
+      .catch(function handleError (err) {
+        console.log('### Error: \n\t%s', err);
+      })
+      .done();
 
-      return errMsg;
-    });
-  };
+  }
 
-  globForFile = function globForFile (file) {
-    return Promise.denodeify(glob)(file);
-  };
-
-  readFile = function readFile (file) {
-    var promise = new Promise(function (resolve, reject) {
-      fs.readFile(file.path || file[0], 'utf8', function (err, res) {
-        if (err) reject(err);
-        if (!!!res) reject("File empty");
-        else resolve(res);
-      });
-    });
-
-    return promise;
-  };
-
-  (function run () {
-    // If (require.main === module), this module was
-    // called directly like via the cli.
-    // If (require.main !== module), this module was
-    // "require'd" like var gll = require('./getLastLine');
-    if (require.main === module)
-      getFile(!!process.argv[2] ? process.argv[2] : '/Users/wkseymou/projects/chroma/chroma-manager/chroma_ui_new/static/chroma_ui/*.map')
-        .then(function (response) {
-          console.log('### response: \n\t%s', response);
-        })
-        .done();
-  })();
-
-  module.exports = {
-    getFile: getFile
-  };
 })();
 
+/**
+ * Higher order function (HOF) that takes a function, and runs the function if
+ * the predicate is true.
+ * @param {Function} f
+ * @returns {Function}
+ */
+function runIf (f) {
+  return function runFuncIf (predicate) {
+    if (predicate)
+      return f();
+    else
+      throw new Error('process.argv[2] is falsy.');
+  }
+}
