@@ -1,6 +1,6 @@
 {
   "name": "promised-file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Super simple file reader, wrapped in a promise.",
   "main": "bin/promised-file.js",
   "scripts": {
@@ -21,7 +21,6 @@
   "dependencies": {
     "funky": "0.0.4",
     "glob": "4.0.2",
-    "promise": "5.0.0",
-    "sprintf": "0.1.3"
+    "promise": "5.0.0"
   }
 }
