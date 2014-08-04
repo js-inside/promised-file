@@ -14,17 +14,13 @@ if (require.main === module) {
 
   var fileArg = process.argv[2];
 
-  var getFileRunner = runIf(getFile.bind(null, fileArg), function handleErr (err) {
-    throw new Error('process.argv[2] is falsy: ', err);
-  });
+  var getFileRunner = runIf(getFile.bind(null, fileArg));
 
-  getFileRunner(f.truthy(fileArg))
-    .then(function (response) {
-      console.log('### File [%s]: \n\t%s', fileArg, response);
-    })
-    .catch(function handleError(err) {
-      console.log('### Error: \n\t%s', err);
-    })
+  var pred = f.truthy.bind(null, fileArg);
+
+  getFileRunner(pred)
+    .then(logReponse)
+    .catch(handleError)
     .done();
 
 }
@@ -38,7 +34,7 @@ if (require.main === module) {
 function getFile(filePath) {
   return globThen(filePath)
     .then(readFile)
-    .then(function returnPromise(file) {
+    .then(function returnPromise (file) {
       return file;
     });
 }
@@ -64,15 +60,22 @@ function readFile(file) {
  * Higher order function (HOF) that takes a function, and runs the function if
  * the predicate is true.
  * @param {Function} f
- * @param {Function} errHandler Handles errors.  Works for now, but this is not optimal.
- * Would be better to only have one function coming in.
  * @returns {Function}
  */
-function runIf(f, errHandler) {
-  return function runFuncIf(predicate) {
-    if (predicate)
-      return f();
-    else
-      errHandler();
+function runIf (f) {
+
+  return function runFuncIf (predicate) {
+
+    if (predicate()) return f();
+
   }
+
+}
+
+function handleError (err) {
+  console.log('### Error: \n\t%s', err);
+}
+
+function logReponse (response) {
+  console.log('### File [%s]: \n\t%s', fileArg, response);
 }
