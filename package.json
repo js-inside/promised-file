@@ -1,6 +1,6 @@
 {
   "name": "promised-file",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Super simple file reader, wrapped in a promise.",
   "main": "bin/promised-file.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "url": "https://github.com/js-inside/promised-file.git"
   },
   "dependencies": {
-    "funky": "0.0.4",
+    "funky": "0.0.5",
     "glob": "4.0.2",
     "promise": "5.0.0"
   }
